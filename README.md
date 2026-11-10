@@ -73,6 +73,7 @@ An end-to-end event registration, ticketing, and payment tracking application bu
 ## 4. Project Structure
 
 ```
+
 event_management/
 ├── pyproject.toml                         # App metadata & linting config
 ├── README.md                              # Project documentation
