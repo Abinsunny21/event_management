@@ -1,0 +1,64 @@
+{% extends "templates/web.html" %}
+{% block title %}EventPro | {{ registration.name | e }}{% endblock %}
+{% block head_include %}
+<link rel="stylesheet" href="/assets/event_management/css/event-dashboard.css">
+<link rel="stylesheet" href="/assets/event_management/css/portal.css">
+{% endblock %}
+{% block page_content %}
+<div class="event-dashboard" data-portal-page="registration-details" data-name="{{ registration.name | e }}">
+    {% include "templates/includes/portal_sidebar.html" %}
+    <main class="dashboard-main">
+        {% set page_heading = "Registration details" %}
+        {% set page_subtitle = registration.name | e %}
+        {% include "templates/includes/portal_header.html" %}
+        <section class="portal-card">
+            <div class="portal-card-heading"><div><h2>{{ registration.name | e }}</h2><p>Created {{ registration.creation | e }} by {{ registration.owner | e }}</p></div><span class="portal-badge" data-registration-field="workflow_state">{{ (registration.workflow_state or "Draft") | e }}</span></div>
+            <div class="portal-message" role="status" aria-live="polite"></div>
+            <dl class="portal-details">
+                <div><dt>Event</dt><dd data-registration-field="event">{{ (event_name or registration.event) | e }}</dd></div>
+                <div><dt>Participant</dt><dd data-registration-field="participant">{{ (participant_name or registration.participant) | e }}</dd></div>
+                <div><dt>Registration date</dt><dd data-registration-field="registration_date">{{ (registration.registration_date or "—") | e }}</dd></div>
+                <div><dt>Ticket type</dt><dd data-registration-field="ticket_type">{{ (registration.ticket_type or "—") | e }}</dd></div>
+                <div><dt>Ticket amount</dt><dd data-registration-field="ticket_amount">₹{{ "%.2f" | format(registration.ticket_amount or 0) }}</dd></div>
+                <div><dt>Discount</dt><dd data-registration-field="discount">₹{{ "%.2f" | format(registration.discount or 0) }}</dd></div>
+                <div><dt>Total amount</dt><dd data-registration-field="total_amount">₹{{ "%.2f" | format(registration.total_amount or 0) }}</dd></div>
+                <div><dt>Payment status</dt><dd data-registration-field="payment_status">{{ (registration.payment_status or "Unpaid") | e }}</dd></div>
+                <div><dt>Document status</dt><dd data-registration-field="docstatus">{{ "Submitted" if registration.docstatus == 1 else "Cancelled" if registration.docstatus == 2 else "Draft" }}</dd></div>
+                <div><dt>Last updated</dt><dd data-registration-field="modified">{{ frappe.utils.format_datetime(registration.modified) | e }}</dd></div>
+            </dl>
+            {% if can_edit_registration %}
+            <details class="portal-edit-panel">
+                <summary>Edit draft registration</summary>
+                <form id="registration-edit-form" class="portal-form" data-name="{{ registration.name | e }}">
+                    <label>Event<select name="event" id="edit-registration-event" data-current="{{ registration.event | e }}" required></select></label>
+                    <label>Participant<select name="participant" id="edit-registration-participant" data-current="{{ registration.participant | e }}" required></select></label>
+                    <label>Registration date<input type="date" name="registration_date" value="{{ registration.registration_date | e }}" required></label>
+                    <label>Ticket type<select name="ticket_type" id="edit-registration-ticket" data-current="{{ registration.ticket_type | e }}" required></select></label>
+                    <label>Discount<input type="number" name="discount" min="0" step="0.01" value="{{ (registration.discount or 0) | e }}"></label>
+                    <div class="portal-form-actions"><button class="portal-button primary" type="submit">Save changes</button></div>
+                </form>
+            </details>
+            {% elif registration.docstatus == 1 %}
+            <p class="portal-notice">Submitted registrations cannot be edited.</p>
+            {% else %}
+            <p class="portal-notice">Editing is unavailable for your permissions or this registration’s current workflow state.</p>
+            {% endif %}
+            <div id="registration-workflow-actions" class="portal-actions"{% if not transitions %} hidden{% endif %}>
+                {% for transition in transitions %}
+                <button class="portal-button{% if transition.action == 'Reject' %} danger{% else %} primary{% endif %}" type="button" data-workflow-action="{{ transition.action | e }}">{{ transition.action | e }}</button>
+                {% endfor %}
+            </div>
+            <div id="registration-document-actions" class="portal-actions">
+                {% if can_cancel_registration %}
+                <button class="portal-button danger" type="button" data-registration-document-action="Cancel">Cancel registration</button>
+                {% endif %}
+                {% if can_delete_registration %}
+                <button class="portal-button danger" type="button" data-registration-document-action="Delete">Delete registration</button>
+                {% endif %}
+            </div>
+            <a class="portal-button secondary" href="/registrations">Back to registrations</a>
+        </section>
+    </main>
+</div>
+<script src="/assets/event_management/js/portal.js"></script>
+{% endblock %}

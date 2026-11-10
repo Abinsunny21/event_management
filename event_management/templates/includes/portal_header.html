@@ -1,0 +1,11 @@
+<header class="dashboard-header">
+    <div>
+        <p class="dashboard-date">EVENT MANAGEMENT WORKSPACE</p>
+        <h1>{{ page_heading | e }}</h1>
+        {% if page_subtitle %}<p class="dashboard-subtitle">{{ page_subtitle | e }}</p>{% endif %}
+    </div>
+    <a class="user-profile user-profile-link" href="{{ account_url | e }}" aria-label="Open My Account">
+        {% if page_heading != "My Account" %}<span class="user-avatar">{{ user_name[:1] | upper | e }}</span>{% endif %}
+        <span><strong>{{ user_name | e }}</strong><small>{{ user_role | e }}</small></span>
+    </a>
+</header>

@@ -1,0 +1,36 @@
+{% extends "templates/web.html" %}
+{% block title %}EventPro | New Registration{% endblock %}
+{% block head_include %}
+<link rel="stylesheet" href="/assets/event_management/css/event-dashboard.css">
+<link rel="stylesheet" href="/assets/event_management/css/portal.css">
+{% endblock %}
+{% block page_content %}
+<div class="event-dashboard" data-portal-page="new-registration">
+    {% include "templates/includes/portal_sidebar.html" %}
+    <main class="dashboard-main">
+        {% set page_heading = "New Registration" %}
+        {% set page_subtitle = "Register a participant for an available event." %}
+        {% include "templates/includes/portal_header.html" %}
+        <section class="portal-card portal-form-card">
+            <div class="portal-card-heading"><h2>Registration details</h2></div>
+            <div class="portal-message" role="status" aria-live="polite"></div>
+            <form id="registration-form" class="portal-form">
+                <label>Event<select name="event" id="registration-event" required><option value="">Loading events…</option></select></label>
+                <div id="selected-event-info" class="portal-info" hidden></div>
+                <p id="no-available-events" class="portal-notice" hidden>No events are currently available for registration.</p>
+                <label>Participant<select name="participant" id="registration-participant" required><option value="">Loading participants…</option></select></label>
+                <label>Registration date<input type="date" name="registration_date" id="registration-date" required></label>
+                <label>Ticket type<select name="ticket_type" id="registration-ticket" required><option value="">Select an event first</option></select></label>
+                <label>Ticket price<input type="text" id="registration-ticket-price" readonly value="—"></label>
+                <label>Discount<input type="number" name="discount" id="registration-discount" min="0" step="0.01" value="0"></label>
+                <label>Total amount<input type="text" id="registration-total" readonly value="—"></label>
+                <div class="portal-form-actions">
+                    <a class="portal-button secondary" href="/registrations">Cancel</a>
+                    <button class="portal-button primary" type="submit">Create registration</button>
+                </div>
+            </form>
+        </section>
+    </main>
+</div>
+<script src="/assets/event_management/js/portal.js"></script>
+{% endblock %}

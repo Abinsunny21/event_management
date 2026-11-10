@@ -1,0 +1,198 @@
+{% extends "templates/web.html" %}
+
+{% block title %}EventPro | Login{% endblock %}
+
+{% block head_include %}
+
+<script src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+<link rel="stylesheet" href="/assets/event_management/css/event-login.css">
+<script src="/assets/event_management/js/event-login.js"></script>
+{% endblock %}
+
+{% block page_content %}
+
+<div class="event-login-wrapper">
+
+<div class="event-login-background">
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+</div>
+
+<div class="event-login-container">
+
+    <!-- EventPro Branding -->
+    <div class="event-brand">
+        <div class="brand-icon">E</div>
+        <h1>EventPro<span>.</span></h1>
+        <p>EVENT MANAGEMENT PLATFORM</p>
+    </div>
+
+    <!-- Login Card -->
+    <div class="login-card">
+
+        <div class="login-heading">
+            <span class="welcome-label">WELCOME BACK</span>
+            <h2>Sign in to your account</h2>
+            <p>Access your EventPro workspace.</p>
+        </div>
+
+        <!-- Login Section -->
+        <section class="for-login">
+
+            <div class="login-content">
+
+                <form class="form-signin form-login" role="form">
+
+                    <div class="page-card-body">
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="login_email">Email Address</label>
+
+                            <input
+                                type="text"
+                                id="login_email"
+                                class="form-control"
+                                placeholder="Enter your email"
+                                autocomplete="username"
+                                required
+                                autofocus>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-group">
+
+                            <div class="password-label">
+                                <label for="login_password">Password</label>
+                                <a href="#forgot">Forgot password?</a>
+                            </div>
+
+                            <div class="password-field">
+
+                                <input
+                                    type="password"
+                                    id="login_password"
+                                    class="form-control"
+                                    placeholder="Enter your password"
+                                    autocomplete="current-password"
+                                    required>
+
+                                <button
+                                    type="button"
+                                    class="toggle-password"
+                                    aria-label="Show password"
+                                    aria-pressed="false">
+                                    <svg class="password-eye-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Login Button -->
+                    <div class="page-card-actions">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary btn-login">
+
+                            Sign In
+                            <span>→</span>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+        <!-- Forgot Password Section -->
+        <section class="for-forgot">
+
+            <div class="login-content">
+
+                <form class="form-signin form-forgot hide" role="form">
+
+                    <div class="page-card-body">
+
+                        <div class="form-group">
+
+                            <label for="forgot_email">Email Address</label>
+
+                            <input
+                                type="email"
+                                id="forgot_email"
+                                class="form-control"
+                                placeholder="Enter your email"
+                                required>
+
+                        </div>
+
+                    </div>
+
+                    <div class="page-card-actions">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary btn-forgot">
+
+                            Reset Password
+
+                        </button>
+
+                        <p class="back-login">
+                            <a href="#login">← Back to Login</a>
+                        </p>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="login-footer">
+        <p>© 2026 EventPro Solutions. All rights reserved.</p>
+        <span>SECURE EVENT MANAGEMENT</span>
+    </div>
+
+</div>
+
+</div>
+
+<!-- Frappe Original Login JavaScript -->
+
+<script>
+    {% include "templates/includes/login/login.js" %}
+</script>
+<script>
+    frappe.ready(function () {
+        const toggle = $(".toggle-password");
+        const password = $("#login_password");
+        const eye = '<svg class="password-eye-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+        const eyeSlash = '<svg class="password-eye-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18"></path><path d="M10.6 5.2A10.7 10.7 0 0 1 12 5c6.4 0 10 7 10 7a15.7 15.7 0 0 1-3.1 3.8M6.2 6.2C3.5 8.1 2 12 2 12s3.6 7 10 7a10.7 10.7 0 0 0 3-.4"></path><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"></path></svg>';
+
+        toggle.off("click").on("click", function () {
+            const visible = password.attr("type") === "password";
+            password.attr("type", visible ? "text" : "password");
+            $(this)
+                .html(visible ? eyeSlash : eye)
+                .attr("aria-label", visible ? "Hide password" : "Show password")
+                .attr("aria-pressed", visible ? "true" : "false");
+        });
+    });
+</script>
+
+{% endblock %}

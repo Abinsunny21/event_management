@@ -1,0 +1,40 @@
+{% extends "templates/web.html" %}
+{% block title %}EventPro | Participants{% endblock %}
+{% block head_include %}
+<link rel="stylesheet" href="/assets/event_management/css/event-dashboard.css">
+<link rel="stylesheet" href="/assets/event_management/css/portal.css">
+{% endblock %}
+{% block page_content %}
+<div class="event-dashboard" data-portal-page="participants">
+    {% include "templates/includes/portal_sidebar.html" %}
+    <main class="dashboard-main">
+        {% set page_heading = "Participants" %}
+        {% set page_subtitle = "Find and maintain participant contact records." %}
+        {% include "templates/includes/portal_header.html" %}
+        <div class="portal-message" role="status" aria-live="polite"></div>
+        <section class="portal-card">
+            <div class="portal-toolbar">
+                <input type="search" id="participant-search" placeholder="Search name, email or phone">
+                {% if can_create_participant %}<a class="portal-button primary" href="/participant-details">Add participant</a>{% endif %}
+            </div>
+            <div class="portal-table-wrap">
+                <table class="portal-table" id="participants-table">
+                    <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Company</th><th></th></tr></thead>
+                    <tbody>
+                    {% for row in participants %}
+                        <tr data-search="{{ ((row.participant_name or '') | lower) | e }} {{ ((row.email or '') | lower) | e }} {{ ((row.phone or '') | lower) | e }}">
+                            <td>{{ (row.participant_name or "—") | e }}</td><td>{{ (row.email or "—") | e }}</td><td>{{ (row.phone or "—") | e }}</td><td>{{ (row.company or "—") | e }}</td>
+                            <td><a class="portal-button small secondary" href="/participant-details?name={{ row.name | urlencode }}">View</a></td>
+                        </tr>
+                    {% else %}
+                        <tr><td class="portal-empty" colspan="5">No participants have been added yet.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <p id="participant-empty-search" class="portal-empty" hidden>No participants match your search.</p>
+        </section>
+    </main>
+</div>
+<script src="/assets/event_management/js/portal.js"></script>
+{% endblock %}

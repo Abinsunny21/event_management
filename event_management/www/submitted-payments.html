@@ -1,0 +1,44 @@
+{% extends "templates/web.html" %}
+{% block title %}EventPro | Submitted Payments{% endblock %}
+{% block head_include %}
+<link rel="stylesheet" href="/assets/event_management/css/event-dashboard.css">
+<link rel="stylesheet" href="/assets/event_management/css/portal.css">
+{% endblock %}
+{% block page_content %}
+<div class="event-dashboard" data-portal-page="submitted-payments">
+    {% include "templates/includes/portal_sidebar.html" %}
+    <main class="dashboard-main">
+        {% set page_heading = "Submitted Payments" %}
+        {% set page_subtitle = "" %}
+        {% include "templates/includes/portal_header.html" %}
+        <section class="portal-card">
+            <div class="portal-card-heading">
+                <div><h2>Payment records</h2><p>{{ payments | length }} submitted payments</p></div>
+                <a class="portal-button secondary" href="/payments">Payment management</a>
+            </div>
+            <div class="portal-table-wrap">
+                <table class="portal-table" id="submitted-payments-table">
+                    <thead><tr><th>Payment ID</th><th>Registration</th><th>Participant</th><th>Event</th><th>Date</th><th>Method</th><th>Amount</th><th>Status</th><th></th></tr></thead>
+                    <tbody>
+                    {% for row in payments %}
+                        <tr>
+                            <td>{{ row.name | e }}</td>
+                            <td><a href="/registration-details?name={{ row.registration | urlencode }}">{{ row.registration | e }}</a></td>
+                            <td>{{ (row.participant or "—") | e }}</td>
+                            <td>{{ (row.event or "—") | e }}</td>
+                            <td>{{ (row.payment_date or "—") | e }}</td>
+                            <td>{{ (row.payment_mode or "—") | e }}</td>
+                            <td>₹{{ "%.2f" | format(row.amount or 0) }}</td>
+                            <td><span class="portal-badge">Submitted</span></td>
+                            <td><a class="portal-button small secondary" href="/payment-details?name={{ row.name | urlencode }}">View</a></td>
+                        </tr>
+                    {% else %}
+                        <tr><td class="portal-empty" colspan="9">No submitted payments are available.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+{% endblock %}

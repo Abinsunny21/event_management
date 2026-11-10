@@ -1,0 +1,48 @@
+{% extends "templates/web.html" %}
+{% block title %}EventPro | {{ page_title | e }}{% endblock %}
+{% block head_include %}
+<link rel="stylesheet" href="/assets/event_management/css/event-dashboard.css">
+<link rel="stylesheet" href="/assets/event_management/css/portal.css">
+{% endblock %}
+{% block page_content %}
+<div class="event-dashboard" data-portal-page="event-details">
+    {% include "templates/includes/portal_sidebar.html" %}
+    <main class="dashboard-main">
+        {% set page_heading = page_title | e %}
+        {% set page_subtitle = "Event details and registration dates" %}
+        {% include "templates/includes/portal_header.html" %}
+        <section class="portal-card portal-form-card">
+            <div class="portal-message" role="status" aria-live="polite"></div>
+            {% if can_edit_event %}
+            <form id="event-form" class="portal-form" data-name="{{ (event.name if event else '') | e }}">
+                <label>Event name<input name="event_name" required value="{{ (event.event_name if event else '') | e }}"></label>
+                <label>Category<select name="event_category" required><option value="">Select category</option>{% for category in ["Workshop", "Conference", "Seminar", "Training", "Other"] %}<option value="{{ category | e }}"{% if event and event.event_category == category %} selected{% endif %}>{{ category | e }}</option>{% endfor %}</select></label>
+                <label>Start date<input type="date" name="start_date" required value="{{ (event.start_date if event else '') | e }}"></label>
+                <label>End date<input type="date" name="end_date" required value="{{ (event.end_date if event else '') | e }}"></label>
+                <label>Registration opens<input type="date" name="registration_start_date" required value="{{ (event.registration_start_date if event else '') | e }}"></label>
+                <label>Registration closes<input type="date" name="registration_end_date" required value="{{ (event.registration_end_date if event else '') | e }}"></label>
+                <label>Registration fee<input type="number" min="0" step="0.01" name="registration_fee" value="{{ (event.registration_fee if event else 0) | e }}"></label>
+                <label>Maximum participants<input type="number" min="0" step="1" name="maximum_participants" value="{{ event.maximum_participants or 0 if event else 0 }}"></label>
+                <label>Status<select name="event_status" required>{% for status in ["Draft", "Open", "Ongoing", "Completed", "Cancelled"] %}<option value="{{ status | e }}"{% if event and event.event_status == status %} selected{% elif not event and status == "Draft" %} selected{% endif %}>{{ status | e }}</option>{% endfor %}</select></label>
+                {% if event %}<label>Duration<input readonly value="{{ (event.event_duration or 'Calculated when saved') | e }}"></label>{% endif %}
+                <div class="portal-form-actions">
+                    <a class="portal-button secondary" href="/events">Cancel</a>
+                    <button class="portal-button primary" type="submit">Save event</button>
+                    {% if event and can_delete_event %}<button class="portal-button danger" id="delete-event" type="button" data-name="{{ event.name | e }}">Delete event</button>{% endif %}
+                </div>
+            </form>
+            {% else %}
+            <dl class="portal-details">
+                <div><dt>Event</dt><dd>{{ event.event_name | e }}</dd></div><div><dt>Category</dt><dd>{{ (event.event_category or "—") | e }}</dd></div>
+                <div><dt>Start</dt><dd>{{ (event.start_date or "—") | e }}</dd></div><div><dt>End</dt><dd>{{ (event.end_date or "—") | e }}</dd></div>
+                <div><dt>Registration opens</dt><dd>{{ (event.registration_start_date or "—") | e }}</dd></div><div><dt>Registration closes</dt><dd>{{ (event.registration_end_date or "—") | e }}</dd></div>
+                <div><dt>Registration fee</dt><dd>₹{{ "%.2f" | format(event.registration_fee or 0) }}</dd></div><div><dt>Maximum participants</dt><dd>{{ event.maximum_participants or "Unlimited" }}</dd></div>
+                <div><dt>Status</dt><dd>{{ (event.event_status or "—") | e }}</dd></div><div><dt>Duration</dt><dd>{{ (event.event_duration or "—") | e }} days</dd></div>
+            </dl>
+            <p class="portal-notice">You have read-only access to this event.</p>
+            {% endif %}
+        </section>
+    </main>
+</div>
+<script src="/assets/event_management/js/portal.js"></script>
+{% endblock %}

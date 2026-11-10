@@ -1,0 +1,381 @@
+
+/* =========================================
+   EVENTPRO REGISTRATIONS PAGE
+========================================= */
+
+.dashboard-main {
+    background: #f5f6fb;
+}
+
+/* Header */
+
+.dashboard-header {
+    margin-bottom: 28px;
+}
+
+.dashboard-header h1 {
+    color: #20243a;
+    font-size: 30px;
+    font-weight: 750;
+    letter-spacing: -0.7px;
+}
+
+.dashboard-subtitle {
+    color: #8991a5;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+/* Welcome Section */
+
+.dashboard-welcome {
+    border-radius: 18px;
+    padding: 30px 32px;
+    background: linear-gradient(120deg, #6250c9, #8871ed);
+    box-shadow: 0 12px 30px rgba(101, 80, 201, 0.16);
+    color: white;
+}
+
+.dashboard-welcome h2 {
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+    margin: 12px 0 8px;
+}
+
+.dashboard-welcome p {
+    color: rgba(255,255,255,0.82);
+    font-size: 13px;
+}
+
+.dashboard-welcome span {
+    color: #e0d9ff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+.dashboard-primary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border-radius: 10px;
+    background: white;
+    color: #6955ce !important;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none !important;
+    transition: 0.25s ease;
+}
+
+.dashboard-primary-button:hover {
+    background: #f0edff;
+    transform: translateY(-2px);
+}
+
+/* Statistics Cards */
+
+.dashboard-stats {
+    gap: 18px;
+    margin: 26px 0;
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid #eceef5;
+    border-radius: 15px;
+    padding: 22px;
+    box-shadow: 0 4px 15px rgba(30, 35, 70, 0.035);
+    transition: 0.25s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(30, 35, 70, 0.07);
+}
+
+.stat-label {
+    color: #858da1;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.stat-value {
+    color: #252a42;
+    font-size: 30px;
+    font-weight: 750;
+    margin: 12px 0 5px;
+}
+
+.stat-footer {
+    color: #a0a7b7;
+    font-size: 11px;
+}
+
+/* Search and Filters */
+
+.registration-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 28px 0 20px;
+    flex-wrap: wrap;
+}
+
+.registration-search,
+.registration-filter {
+    height: 46px;
+    padding: 0 15px;
+    border: 1px solid #e5e7ef;
+    border-radius: 11px;
+    background: white;
+    color: #343b52;
+    font-size: 13px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.registration-search {
+    flex: 1;
+    min-width: 250px;
+}
+
+.registration-filter {
+    min-width: 190px;
+    cursor: pointer;
+}
+
+.registration-search:focus,
+.registration-filter:focus {
+    border-color: #8065e9;
+    box-shadow: 0 0 0 3px rgba(128, 101, 233, 0.12);
+}
+
+.registration-search::placeholder {
+    color: #a4aabb;
+}
+
+/* Table Container */
+
+.dashboard-table-section {
+    background: white;
+    border: 1px solid #eceef4;
+    border-radius: 17px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 20px rgba(30, 35, 70, 0.035);
+}
+
+.table-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    gap: 15px;
+}
+
+.table-heading h2 {
+    margin: 0 0 7px;
+    color: #252a40;
+    font-size: 19px;
+    font-weight: 750;
+}
+
+.table-heading p {
+    margin: 0;
+    color: #969daf;
+    font-size: 12px;
+}
+
+.record-count {
+    padding: 8px 13px;
+    border-radius: 30px;
+    background: #f1edff;
+    color: #7158d4;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* Registration Table */
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 10px;
+}
+
+.dashboard-table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.dashboard-table thead th {
+    padding: 16px 13px;
+    background: #f7f7fc;
+    color: #858ba0;
+    font-size: 10px;
+    font-weight: 750;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    white-space: nowrap;
+    border-bottom: 1px solid #eceef4;
+}
+
+.dashboard-table thead th:first-child {
+    border-radius: 9px 0 0 0;
+}
+
+.dashboard-table thead th:last-child {
+    border-radius: 0 9px 0 0;
+}
+
+.dashboard-table tbody td {
+    padding: 17px 13px;
+    color: #555d72;
+    font-size: 12px;
+    border-bottom: 1px solid #f0f1f6;
+    white-space: nowrap;
+}
+
+.dashboard-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.dashboard-table tbody tr:hover {
+    background: #faf9ff;
+}
+
+.dashboard-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.dashboard-table tbody tr[hidden] {
+    display: none;
+}
+
+.dashboard-table tbody td strong {
+    color: #7058d0;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+/* Status Badges */
+
+.registration-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 11px;
+    border-radius: 30px;
+    background: #f0edff;
+    color: #7054d0;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+/* Payment and Workflow Status Cells */
+
+.dashboard-table tbody td:nth-child(6) .registration-status {
+    background: #fff5e8;
+    color: #c27a20;
+}
+
+.dashboard-table tbody td:nth-child(7) .registration-status {
+    background: #edf0ff;
+    color: #6258c9;
+}
+
+/* View Button */
+
+.registration-view-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 15px;
+    border: 1px solid #e3ddfb;
+    border-radius: 8px;
+    background: #f7f5ff;
+    color: #7158d4;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none !important;
+    transition: 0.2s ease;
+}
+
+.registration-view-button:hover {
+    background: #7158d4;
+    color: white;
+    border-color: #7158d4;
+    transform: translateY(-1px);
+}
+
+/* Empty State */
+
+.empty-registrations {
+    padding: 35px;
+    color: #969daf;
+    text-align: center;
+    font-size: 13px;
+}
+
+#no-search-results {
+    margin-top: 15px;
+}
+
+#no-search-results[hidden] {
+    display: none;
+}
+
+/* Responsive Design */
+
+@media (max-width: 900px) {
+    .dashboard-table-section {
+        padding: 18px;
+    }
+
+    .registration-toolbar {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-header h1 {
+        font-size: 24px;
+    }
+
+    .dashboard-welcome {
+        padding: 23px;
+    }
+
+    .dashboard-welcome h2 {
+        font-size: 21px;
+    }
+
+    .registration-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .registration-search,
+    .registration-filter {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .dashboard-table-section {
+        padding: 15px;
+    }
+
+    .table-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .dashboard-stats {
+        gap: 12px;
+    }
+}

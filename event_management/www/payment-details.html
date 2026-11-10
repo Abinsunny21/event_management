@@ -1,0 +1,36 @@
+{% extends "templates/web.html" %}
+{% block title %}EventPro | Payment {{ payment.name | e }}{% endblock %}
+{% block head_include %}
+<link rel="stylesheet" href="/assets/event_management/css/event-dashboard.css">
+<link rel="stylesheet" href="/assets/event_management/css/portal.css">
+{% endblock %}
+{% block page_content %}
+<div class="event-dashboard" data-portal-page="payment-details">
+    {% include "templates/includes/portal_sidebar.html" %}
+    <main class="dashboard-main">
+        {% set page_heading = "Payment details" %}
+        {% set page_subtitle = "" %}
+        {% include "templates/includes/portal_header.html" %}
+        <section class="portal-card">
+            <div class="portal-card-heading">
+                <div><h2>{{ payment.name | e }}</h2><p>Submitted payment · Read only</p></div>
+                <span class="portal-badge">Submitted</span>
+            </div>
+            <dl class="portal-details">
+                <div><dt>Payment ID</dt><dd>{{ payment.name | e }}</dd></div>
+                <div><dt>Registration</dt><dd><a href="/registration-details?name={{ payment.registration | urlencode }}">{{ payment.registration | e }}</a></dd></div>
+                <div><dt>Participant</dt><dd>{{ payment.participant | e }}</dd></div>
+                <div><dt>Event</dt><dd>{{ payment.event | e }}</dd></div>
+                <div><dt>Payment date</dt><dd>{{ payment.payment_date | e }}</dd></div>
+                <div><dt>Payment method</dt><dd>{{ payment.payment_mode | e }}</dd></div>
+                <div><dt>Amount</dt><dd>₹{{ "%.2f" | format(payment.amount or 0) }}</dd></div>
+                <div><dt>Transaction reference</dt><dd>{{ (payment.transaction_reference or "—") | e }}</dd></div>
+                <div><dt>Created</dt><dd>{{ frappe.utils.format_datetime(payment.creation) | e }}</dd></div>
+                <div><dt>Created by</dt><dd>{{ payment.owner | e }}</dd></div>
+                <div><dt>Last updated</dt><dd>{{ frappe.utils.format_datetime(payment.modified) | e }}</dd></div>
+            </dl>
+            <a class="portal-button secondary" href="/submitted-payments">Back to submitted payments</a>
+        </section>
+    </main>
+</div>
+{% endblock %}

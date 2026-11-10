@@ -1,0 +1,162 @@
+{
+	"info": {
+		"_postman_id": "7b8f9a2e-4c1d-4e9f-9a3b-2c1e8a9d0f1a",
+		"name": "Event Management System APIs",
+		"description": "Postman Collection for testing the Event Management System APIs in Frappe Framework.\n\n### Authentication\nRequires Frappe API Key and API Secret in the Authorization header:\n`Authorization: token {{api_key}}:{{api_secret}}`\n\n### Base URL Variable\nSet `{{base_url}}` to your local or remote Frappe site (e.g. `http://localhost:8000`).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "token {{api_key}}:{{api_secret}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Authorization",
+				"type": "string"
+			}
+		]
+	},
+	"item": [
+		{
+			"name": "1. Get Available Events",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/method/event_management.api.get_available_events",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"method",
+						"event_management.api.get_available_events"
+					]
+				},
+				"description": "Retrieves all events with `event_status = 'Open'`, ordered by `start_date` ascending.\n\n**Parameters:** None."
+			},
+			"response": []
+		},
+		{
+			"name": "2. Get Event Details (Valid ID)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/method/event_management.api.get_event_details?event_id={{sample_event_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"method",
+						"event_management.api.get_event_details"
+					],
+					"query": [
+						{
+							"key": "event_id",
+							"value": "{{sample_event_id}}",
+							"description": "Document name of the event, e.g. EVT-00001"
+						}
+					]
+				},
+				"description": "Fetches comprehensive details for a specific event by its Event ID."
+			},
+			"response": []
+		},
+		{
+			"name": "2b. Get Event Details (Missing Event ID)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/method/event_management.api.get_event_details",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"method",
+						"event_management.api.get_event_details"
+					]
+				},
+				"description": "Expected failure test case: Omitting `event_id` should return `success: false`."
+			},
+			"response": []
+		},
+		{
+			"name": "3. Get Registered Participants (Valid ID)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/method/event_management.api.get_registered_participants?event_id={{sample_event_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"method",
+						"event_management.api.get_registered_participants"
+					],
+					"query": [
+						{
+							"key": "event_id",
+							"value": "{{sample_event_id}}",
+							"description": "Document name of the event, e.g. EVT-00001"
+						}
+					]
+				},
+				"description": "Fetches the list of participants with Approved registrations for the given event, along with total count."
+			},
+			"response": []
+		},
+		{
+			"name": "3b. Get Registered Participants (Missing Event ID)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/method/event_management.api.get_registered_participants",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"method",
+						"event_management.api.get_registered_participants"
+					]
+				},
+				"description": "Expected failure test case: Omitting `event_id` should return `success: false` with empty data array."
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "api_key",
+			"value": "YOUR_API_KEY",
+			"type": "string"
+		},
+		{
+			"key": "api_secret",
+			"value": "YOUR_API_SECRET",
+			"type": "string"
+		},
+		{
+			"key": "sample_event_id",
+			"value": "EVT-00001",
+			"type": "string"
+		}
+	]
+}
+

@@ -1,0 +1,49 @@
+{% extends "templates/web.html" %}
+{% block title %}EventPro | Ticket Types{% endblock %}
+{% block head_include %}
+<link rel="stylesheet" href="/assets/event_management/css/event-dashboard.css">
+<link rel="stylesheet" href="/assets/event_management/css/portal.css">
+{% endblock %}
+{% block page_content %}
+<div class="event-dashboard" data-portal-page="ticket-types">
+    {% include "templates/includes/portal_sidebar.html" %}
+    <main class="dashboard-main">
+        {% set page_heading = "Ticket Types" %}
+        {% set page_subtitle = "Maintain ticket prices and active availability." %}
+        {% include "templates/includes/portal_header.html" %}
+        {% if not show_ticket_type_form %}<div class="portal-message" role="status" aria-live="polite"></div>{% endif %}
+        {% if can_create_ticket_type and not show_ticket_type_form and not ticket_type %}
+        <div class="portal-toolbar portal-toolbar-end"><a class="portal-button primary" href="/ticket-types?new=1">Add ticket type</a></div>
+        {% endif %}
+        {% if show_ticket_type_form or ticket_type %}
+            {% if can_edit_ticket_type %}
+            <section class="portal-card portal-form-card">
+                <h2>{{ "Edit ticket type" if ticket_type else "New ticket type" }}</h2>
+                <div class="portal-message" role="status" aria-live="polite"></div>
+                <form id="ticket-type-form" class="portal-form" data-name="{{ (ticket_type.name if ticket_type else '') | e }}">
+                    <label>Ticket type name<input name="ticket_type_name" required value="{{ (ticket_type.ticket_type_name if ticket_type else '') | e }}"{% if ticket_type %} readonly{% endif %}></label>
+                    <label>Price<input type="number" name="ticket_price" min="0" step="0.01" required value="{{ (ticket_type.ticket_price if ticket_type else '') | e }}"></label>
+                    <label>Description<textarea name="description" rows="3">{{ (ticket_type.description if ticket_type else '') | e }}</textarea></label>
+                    <label class="portal-checkbox"><input type="checkbox" name="is_active" value="1"{% if not ticket_type or ticket_type.is_active %} checked{% endif %}> Active</label>
+                    <div class="portal-form-actions"><a class="portal-button secondary" href="/ticket-types">Cancel</a><button class="portal-button primary" type="submit">Save ticket type</button></div>
+                </form>
+            </section>
+            {% else %}
+            <p class="portal-notice">You have read-only access to this ticket type.</p>
+            {% endif %}
+        {% endif %}
+        <section class="portal-card">
+            <div class="portal-table-wrap">
+                <table class="portal-table"><thead><tr><th>Ticket type</th><th>Price</th><th>Description</th><th>Status</th><th></th></tr></thead><tbody>
+                {% for row in ticket_types %}
+                    <tr><td><strong>{{ (row.ticket_type_name or row.name) | e }}</strong></td><td>₹{{ "%.2f" | format(row.ticket_price or 0) }}</td><td>{{ (row.description or "—") | e }}</td><td><span class="portal-badge">{{ "Active" if row.is_active else "Inactive" }}</span></td><td><a class="portal-button small secondary" href="/ticket-types?name={{ row.name | urlencode }}">View</a></td></tr>
+                {% else %}
+                    <tr><td class="portal-empty" colspan="5">No ticket types are available.</td></tr>
+                {% endfor %}
+                </tbody></table>
+            </div>
+        </section>
+    </main>
+</div>
+<script src="/assets/event_management/js/portal.js"></script>
+{% endblock %}

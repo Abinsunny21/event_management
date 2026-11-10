@@ -1,0 +1,116 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "REG-.#####",
+ "creation": "2026-11-05 15:05:08.630436",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_ifgo",
+  "amended_from",
+  "event",
+  "participant",
+  "registration_date",
+  "ticket_type",
+  "ticket_amount",
+  "discount",
+  "total_amount",
+  "payment_status"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_ifgo",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Event Registration",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "event",
+   "fieldtype": "Link",
+   "label": "Event",
+   "options": "Event Details"
+  },
+  {
+   "fieldname": "participant",
+   "fieldtype": "Link",
+   "label": "Participant",
+   "options": "Participant"
+  },
+  {
+   "fieldname": "registration_date",
+   "fieldtype": "Date",
+   "label": "Registration Date"
+  },
+  {
+   "fieldname": "ticket_type",
+   "fieldtype": "Link",
+   "label": "Ticket Type",
+   "options": "Ticket Type"
+  },
+  {
+   "fieldname": "ticket_amount",
+   "fieldtype": "Currency",
+   "label": "Ticket Amount"
+  },
+  {
+   "fieldname": "discount",
+   "fieldtype": "Currency",
+   "label": "Discount"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total Amount"
+  },
+  {
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "Payment Status",
+   "options": "Unpaid\nPartially Paid\nPaid"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-11-06 16:08:26.319733",
+ "modified_by": "Administrator",
+ "module": "Event Management",
+ "name": "Event Registration",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "role": "Event Manager"
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "event"
+}

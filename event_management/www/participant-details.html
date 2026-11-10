@@ -1,0 +1,37 @@
+{% extends "templates/web.html" %}
+{% block title %}EventPro | {{ page_title | e }}{% endblock %}
+{% block head_include %}
+<link rel="stylesheet" href="/assets/event_management/css/event-dashboard.css">
+<link rel="stylesheet" href="/assets/event_management/css/portal.css">
+{% endblock %}
+{% block page_content %}
+<div class="event-dashboard" data-portal-page="participant-details">
+    {% include "templates/includes/portal_sidebar.html" %}
+    <main class="dashboard-main">
+        {% set page_heading = page_title | e %}
+        {% set page_subtitle = "Participant contact information" %}
+        {% include "templates/includes/portal_header.html" %}
+        <section class="portal-card portal-form-card">
+            <div class="portal-message" role="status" aria-live="polite"></div>
+            {% if can_edit_participant %}
+            <form id="participant-form" class="portal-form" data-name="{{ (participant.name if participant else '') | e }}">
+                <label>Participant name<input name="participant_name" required value="{{ (participant.participant_name if participant else '') | e }}"></label>
+                <label>Email<input type="email" name="email" value="{{ (participant.email if participant else '') | e }}"></label>
+                <label>Phone<input type="tel" name="phone" value="{{ (participant.phone if participant else '') | e }}"></label>
+                <label>Company<input name="company" value="{{ (participant.company if participant else '') | e }}"></label>
+                <div class="portal-form-actions"><a class="portal-button secondary" href="/participants">Cancel</a><button class="portal-button primary" type="submit">Save participant</button></div>
+            </form>
+            {% else %}
+            <dl class="portal-details">
+                <div><dt>Name</dt><dd>{{ (participant.participant_name or "—") | e }}</dd></div>
+                <div><dt>Email</dt><dd>{{ (participant.email or "—") | e }}</dd></div>
+                <div><dt>Phone</dt><dd>{{ (participant.phone or "—") | e }}</dd></div>
+                <div><dt>Company</dt><dd>{{ (participant.company or "—") | e }}</dd></div>
+            </dl>
+            <p class="portal-notice">You have read-only access to this participant.</p>
+            {% endif %}
+        </section>
+    </main>
+</div>
+<script src="/assets/event_management/js/portal.js"></script>
+{% endblock %}

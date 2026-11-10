@@ -1,0 +1,45 @@
+{% extends "templates/web.html" %}
+{% block title %}EventPro | Payments{% endblock %}
+{% block head_include %}
+<link rel="stylesheet" href="/assets/event_management/css/event-dashboard.css">
+<link rel="stylesheet" href="/assets/event_management/css/portal.css">
+{% endblock %}
+{% block page_content %}
+<div class="event-dashboard" data-portal-page="payments" data-can-edit="{{ 1 if can_edit_payments else 0 }}" data-can-submit="{{ 1 if can_submit_payments else 0 }}" data-can-cancel="{{ 1 if can_cancel_payments else 0 }}">
+    {% include "templates/includes/portal_sidebar.html" %}
+    <main class="dashboard-main">
+        {% set page_heading = "Event Payments" %}
+        {% set page_subtitle = "" %}
+        {% include "templates/includes/portal_header.html" %}
+        <div class="portal-message" role="status" aria-live="polite"></div>
+        <div class="portal-toolbar portal-toolbar-end"><a class="portal-button secondary" href="/submitted-payments">View submitted payments</a></div>
+        {% if (can_create_payment and not selected_payment) or can_edit_payment %}
+        <details class="portal-card portal-collapsible">
+            <summary class="portal-button primary">{{ ("Edit payment " ~ selected_payment.name) | e if can_edit_payment else "Record a payment" }}</summary>
+            <form id="payment-form" class="portal-form" data-name="{{ (selected_payment.name if can_edit_payment else '') | e }}">
+                <label>Registration<select name="registration" required><option value="">Select registration</option>{% for row in registrations %}<option value="{{ row.name | e }}"{% if can_edit_payment and selected_payment.registration == row.name %} selected{% endif %}>{{ row.name | e }} · ₹{{ "%.2f" | format(row.total_amount or 0) }} · {{ (row.payment_status or "Unpaid") | e }}</option>{% endfor %}</select></label>
+                <label>Payment date<input type="date" name="payment_date" required value="{{ (selected_payment.payment_date if can_edit_payment else '') | e }}"></label>
+                <label>Payment mode<select name="payment_mode" required><option value="">Select mode</option>{% for mode in ["Cash", "UPI", "Bank Transfer", "Credit Card", "Debit Card"] %}<option value="{{ mode | e }}"{% if can_edit_payment and selected_payment.payment_mode == mode %} selected{% endif %}>{{ mode | e }}</option>{% endfor %}</select></label>
+                <label>Amount<input type="number" name="amount" min="0.01" step="0.01" required value="{{ (selected_payment.amount if can_edit_payment else '') | e }}"></label>
+                <label>Transaction reference<input name="transaction_reference" value="{{ (selected_payment.transaction_reference if can_edit_payment else '') | e }}"></label>
+                <div class="portal-form-actions"><button class="portal-button primary" type="submit">{{ "Save payment changes" if can_edit_payment else "Save payment draft" }}</button></div>
+            </form>
+        </details>
+        {% endif %}
+        <section class="portal-card">
+            <div class="portal-table-wrap">
+                <table class="portal-table" id="payments-table"><thead><tr><th>Payment ID</th><th>Registration</th><th>Date</th><th>Mode</th><th>Amount</th><th>Reference</th><th>Document status</th><th>Actions</th></tr></thead>
+                <tbody>
+                {% for row in payments %}
+                    <tr><td>{{ row.name | e }}</td><td><a href="/registration-details?name={{ row.registration | urlencode }}">{{ row.registration | e }}</a></td><td>{{ (row.payment_date or "—") | e }}</td><td>{{ (row.payment_mode or "—") | e }}</td><td>₹{{ "%.2f" | format(row.amount or 0) }}</td><td>{{ (row.transaction_reference or "—") | e }}</td><td><span class="portal-badge">{{ "Submitted" if row.docstatus == 1 else "Cancelled" if row.docstatus == 2 else "Draft" }}</span></td>
+                    <td>{% if row.docstatus == 1 %}<a class="portal-button small secondary" href="/payment-details?name={{ row.name | urlencode }}">View</a>{% elif can_manage_payments %}{% if row.docstatus == 0 %}{% if can_edit_payments %}<a class="portal-button small secondary" href="/payments?name={{ row.name | urlencode }}">Edit</a>{% endif %}{% if can_submit_payments %}<button class="portal-button small primary" data-payment-action="Submit" data-name="{{ row.name | e }}">Submit</button>{% endif %}{% elif row.docstatus == 2 and can_cancel_payments %}<span class="portal-badge">Cancelled</span>{% endif %}{% endif %}</td></tr>
+                {% else %}
+                    <tr><td class="portal-empty" colspan="8">No payment records are available.</td></tr>
+                {% endfor %}
+                </tbody></table>
+            </div>
+        </section>
+    </main>
+</div>
+<script src="/assets/event_management/js/portal.js"></script>
+{% endblock %}

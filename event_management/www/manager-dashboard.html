@@ -1,0 +1,43 @@
+{% extends "templates/web.html" %}
+{% block title %}EventPro | Manager Dashboard{% endblock %}
+{% block head_include %}
+<link rel="stylesheet" href="/assets/event_management/css/event-dashboard.css">
+<link rel="stylesheet" href="/assets/event_management/css/portal.css">
+{% endblock %}
+{% block page_content %}
+<div class="event-dashboard" data-portal-page="manager-dashboard">
+    {% include "templates/includes/portal_sidebar.html" %}
+    <main class="dashboard-main">
+        {% set page_heading = "Event Manager Dashboard" %}
+        {% set page_subtitle = "" %}
+        {% include "templates/includes/portal_header.html" %}
+        <div class="portal-message" role="status" aria-live="polite"></div>
+        <section class="dashboard-welcome">
+            <div><span>EVENT OPERATIONS</span><h2>Welcome, {{ user_name | e }}</h2><p>Review registrations, follow upcoming events and track recent payments.</p></div>
+            <a class="dashboard-primary-button" href="/registrations">Review registrations</a>
+        </section>
+        <section class="dashboard-stats portal-manager-stats">
+            <div class="stat-card"><div class="stat-icon purple">◈</div><p>Total events</p><h2 id="manager-total-events">—</h2></div>
+            <div class="stat-card"><div class="stat-icon blue">▤</div><p>Total registrations</p><h2 id="manager-total-registrations">—</h2></div>
+            <div class="stat-card"><div class="stat-icon orange">◷</div><p>Pending approvals</p><h2 id="manager-pending-approvals">—</h2></div>
+            <div class="stat-card"><div class="stat-icon green">✓</div><p>Approved registrations</p><h2 id="manager-approved-registrations">—</h2></div>
+            <div class="stat-card"><div class="stat-icon orange">×</div><p>Rejected registrations</p><h2 id="manager-rejected-registrations">—</h2></div>
+            <div class="stat-card"><div class="stat-icon blue">♙</div><p>Participants</p><h2 id="manager-total-participants">—</h2></div>
+            <div class="stat-card"><div class="stat-icon purple">$</div><p>Submitted payments</p><h2 id="manager-total-payments">—</h2></div>
+        </section>
+        <section class="portal-card">
+            <div class="portal-card-heading"><div><h2>Pending approvals</h2></div><a href="/registrations">All registrations →</a></div>
+            <div class="portal-table-wrap"><table class="portal-table"><thead><tr><th>Registration</th><th>Participant</th><th>Event</th><th>Amount</th><th>Payment</th><th>Workflow</th></tr></thead><tbody id="manager-pending-registrations"><tr><td class="portal-empty" colspan="6">Loading registrations…</td></tr></tbody></table></div>
+        </section>
+        <section class="portal-card">
+            <div class="portal-card-heading"><div><h2>Recent registrations</h2><p>Latest accessible registration activity.</p></div><a href="/registrations">All registrations →</a></div>
+            <div class="portal-table-wrap"><table class="portal-table"><thead><tr><th>Registration</th><th>Participant</th><th>Event</th><th>Amount</th><th>Payment</th><th>Workflow</th></tr></thead><tbody id="manager-registrations"><tr><td class="portal-empty" colspan="6">Loading registrations…</td></tr></tbody></table></div>
+        </section>
+        <div class="portal-two-column">
+            <section class="portal-card"><div class="portal-card-heading"><div><h2>Upcoming events</h2><p>Scheduled open and ongoing events</p></div><a href="/events">All events →</a></div><div id="manager-events" class="portal-list"><p class="portal-empty">Loading events…</p></div></section>
+            <section class="portal-card"><div class="portal-card-heading"><div><h2>Recent payment activity</h2></div><a href="/submitted-payments">View Payments →</a></div><div id="manager-payments" class="portal-list"><p class="portal-empty">Loading payments…</p></div></section>
+        </div>
+    </main>
+</div>
+<script src="/assets/event_management/js/portal.js"></script>
+{% endblock %}

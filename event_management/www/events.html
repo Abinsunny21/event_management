@@ -1,0 +1,49 @@
+{% extends "templates/web.html" %}
+{% block title %}EventPro | Events{% endblock %}
+{% block head_include %}
+<link rel="stylesheet" href="/assets/event_management/css/event-dashboard.css">
+<link rel="stylesheet" href="/assets/event_management/css/portal.css">
+{% endblock %}
+{% block page_content %}
+<div class="event-dashboard" data-portal-page="events">
+    {% include "templates/includes/portal_sidebar.html" %}
+    <main class="dashboard-main">
+        {% set page_heading = "Events" %}
+        {% set page_subtitle = "Explore event schedules, categories and registration availability." %}
+        {% include "templates/includes/portal_header.html" %}
+        <div class="portal-message" role="status" aria-live="polite"></div>
+        <section class="portal-card">
+            <div class="portal-toolbar">
+                <input type="search" id="event-search" placeholder="Search events">
+                <select id="event-category-filter"><option value="">All categories</option><option>Workshop</option><option>Conference</option><option>Seminar</option><option>Training</option><option>Other</option></select>
+                <select id="event-status-filter"><option value="">All statuses</option><option>Draft</option><option>Open</option><option>Ongoing</option><option>Completed</option><option>Cancelled</option></select>
+                {% if can_create_event %}<a class="portal-button primary" href="/event-details">Add event</a>{% endif %}
+            </div>
+            <div class="portal-table-wrap">
+                <table class="portal-table" id="events-table">
+                    <thead><tr><th>Event</th><th>Category</th><th>Dates</th><th>Registration window</th><th>Fee</th><th>Capacity</th><th>Status</th><th>Availability</th><th></th></tr></thead>
+                    <tbody>
+                    {% for row in events %}
+                        <tr data-search="{{ ((row.event_name or '') | lower) | e }}" data-category="{{ (row.event_category or '') | e }}" data-status="{{ (row.event_status or '') | e }}">
+                            <td><strong>{{ (row.event_name or row.name) | e }}</strong><small class="portal-secondary-text">{{ row.name | e }}</small></td>
+                            <td>{{ (row.event_category or "—") | e }}</td>
+                            <td>{{ (row.start_date or "—") | e }}{% if row.end_date and row.end_date != row.start_date %} – {{ row.end_date | e }}{% endif %}</td>
+                            <td>{{ (row.registration_start_date or "—") | e }} – {{ (row.registration_end_date or "—") | e }}</td>
+                            <td>₹{{ "%.2f" | format(row.registration_fee or 0) }}</td>
+                            <td>{{ row.maximum_participants or "Unlimited" }}</td>
+                            <td><span class="portal-badge">{{ (row.event_status or "—") | e }}</span></td>
+                            <td><span class="portal-badge">{{ "Accepting registrations" if row.registration_available else "Unavailable" }}</span></td>
+                            <td><a class="portal-button small secondary" href="/event-details?name={{ row.name | urlencode }}">View</a></td>
+                        </tr>
+                    {% else %}
+                        <tr><td class="portal-empty" colspan="9">No events are available.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <p id="event-empty-search" class="portal-empty" hidden>No events match those filters.</p>
+        </section>
+    </main>
+</div>
+<script src="/assets/event_management/js/portal.js"></script>
+{% endblock %}

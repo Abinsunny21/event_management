@@ -1,0 +1,20 @@
+<aside class="dashboard-sidebar">
+    <div class="dashboard-brand">
+        <span class="brand-icon">E</span>
+        <div><h2>EventPro<span>.</span></h2><small>SOLUTIONS</small></div>
+    </div>
+    <nav class="sidebar-section" aria-label="Portal navigation">
+        <p class="sidebar-label">WORKSPACE</p>
+        {% for link in portal_links %}
+            {% if link.visible %}
+                <a href="{{ link.url | e }}" class="sidebar-link{% if link.active %} active{% endif %}">
+                    <span>{{ link.icon | e }}</span>{{ link.label | e }}
+                </a>
+            {% endif %}
+        {% endfor %}
+    </nav>
+    <div class="sidebar-bottom">
+        <a href="{{ account_url | e }}" class="sidebar-link{% if account_active %} active{% endif %}"><span>⚙</span>My Account</a>
+        <a href="/event-logout" class="sidebar-link logout-link"><span>↪</span>Logout</a>
+    </div>
+</aside>

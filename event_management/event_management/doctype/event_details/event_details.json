@@ -1,0 +1,105 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "EVT-.#####",
+ "creation": "2026-11-05 14:41:27.487899",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "event_name",
+  "event_category",
+  "start_date",
+  "end_date",
+  "registration_start_date",
+  "registration_end_date",
+  "registration_fee",
+  "maximum_participants",
+  "event_status",
+  "event_duration"
+ ],
+ "fields": [
+  {
+   "fieldname": "event_name",
+   "fieldtype": "Data",
+   "label": "Event Name"
+  },
+  {
+   "fieldname": "event_category",
+   "fieldtype": "Select",
+   "label": "Event Category",
+   "options": "Workshop\nConference\nSeminar\nTraining\nOther"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "registration_start_date",
+   "fieldtype": "Date",
+   "label": "Registration Start Date"
+  },
+  {
+   "fieldname": "registration_end_date",
+   "fieldtype": "Date",
+   "label": "Registration End Date"
+  },
+  {
+   "fieldname": "registration_fee",
+   "fieldtype": "Currency",
+   "label": "Registration Fee"
+  },
+  {
+   "fieldname": "maximum_participants",
+   "fieldtype": "Int",
+   "label": "Maximum Participants"
+  },
+  {
+   "fieldname": "event_status",
+   "fieldtype": "Select",
+   "label": "Event Status",
+   "options": "Draft\nOpen\nOngoing\nCompleted\nCancelled"
+  },
+  {
+   "fieldname": "event_duration",
+   "fieldtype": "Int",
+   "label": "Event Duration",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-11-06 15:30:11.478814",
+ "modified_by": "Administrator",
+ "module": "Event Management",
+ "name": "Event Details",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "event_name"
+}

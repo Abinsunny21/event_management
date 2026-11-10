@@ -5,6 +5,10 @@ app_description = "	Event Management System for EventPro Solutions"
 app_email = "abinsunny216@gmail.com"
 app_license = "mit"
 
+website_redirects = [
+    {"source": r"/login", "target": "/event-login", "redirect_http_status": 302},
+]
+
 # Apps
 # ------------------
 
@@ -252,4 +256,3 @@ app_license = "mit"
 # ------------
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
-

@@ -1,0 +1,44 @@
+{% extends "templates/web.html" %}
+{% block title %}EventPro | My Account{% endblock %}
+{% block head_include %}
+<link rel="stylesheet" href="/assets/event_management/css/event-dashboard.css">
+<link rel="stylesheet" href="/assets/event_management/css/portal.css">
+{% endblock %}
+{% block page_content %}
+<div class="event-dashboard" data-portal-page="my-account">
+    {% include "templates/includes/portal_sidebar.html" %}
+    <main class="dashboard-main">
+        {% set page_heading = "My Account" %}
+        {% set page_subtitle = "" %}
+        {% include "templates/includes/portal_header.html" %}
+        <section class="account-hero portal-card">
+            <div>
+                <span class="account-eyebrow">EVENTPRO ACCOUNT</span>
+                <h2>{{ account_profile.full_name | e }}</h2>
+                <p>{{ account_profile.email | e }}</p>
+            </div>
+            <span class="account-role-badge">{{ user_role | e }}</span>
+        </section>
+        <section class="portal-card">
+            <div class="portal-card-heading">
+                <div><h2>Profile information</h2><p>Your signed-in account details</p></div>
+            </div>
+            <dl class="portal-details account-details">
+                <div><dt>Full name</dt><dd>{{ account_profile.full_name | e }}</dd></div>
+                <div><dt>Email address</dt><dd>{{ account_profile.email | e }}</dd></div>
+                {% if account_profile.phone %}<div><dt>Phone</dt><dd>{{ account_profile.phone | e }}</dd></div>{% endif %}
+                {% if account_profile.mobile_no %}<div><dt>Mobile</dt><dd>{{ account_profile.mobile_no | e }}</dd></div>{% endif %}
+                <div><dt>Portal role</dt><dd>{{ user_role | e }}</dd></div>
+                {% if account_profile.user_type %}<div><dt>Account type</dt><dd>{{ account_profile.user_type | e }}</dd></div>{% endif %}
+                {% if account_profile.time_zone %}<div><dt>Time zone</dt><dd>{{ account_profile.time_zone | e }}</dd></div>{% endif %}
+                {% if account_profile.language %}<div><dt>Language</dt><dd>{{ account_profile.language | e }}</dd></div>{% endif %}
+                {% if account_profile.last_login %}<div><dt>Last login</dt><dd>{{ frappe.utils.format_datetime(account_profile.last_login) | e }}</dd></div>{% endif %}
+            </dl>
+            <div class="portal-form-actions">
+                <a class="portal-button primary" href="/me">Manage profile and password</a>
+                <a class="portal-button secondary" href="{{ dashboard_url | e }}">Back to dashboard</a>
+            </div>
+        </section>
+    </main>
+</div>
+{% endblock %}
